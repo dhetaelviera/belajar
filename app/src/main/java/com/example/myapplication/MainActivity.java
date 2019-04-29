@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final String username=editTextUsername.getText().toString().trim();
         final String password=editTextPassword.getText().toString().trim();
 
-        progressDialog.setMessage("Registering");
+        progressDialog.setMessage("Registering...");
         progressDialog.show();
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST,Constant.URL_REGISTER,
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         progressDialog.dismiss();
                         try {
                             JSONObject jsonObject=new JSONObject(response);
-                            Toast.makeText(getApplicationContext(),jsonObject.getString("Berhasil"),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),jsonObject.getString(username),Toast.LENGTH_LONG).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -86,8 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
-        RequestQueue requestQueue= Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
     @Override
     public void onClick(View v) {
